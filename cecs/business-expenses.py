@@ -1,20 +1,25 @@
-# Comment on main()
 def main():
+    # Set Accumulators
     total = 0
     total_excess = 0
     days = get_days()
     departure = get_time()
     airfare = get_airfare()
+    # Functions up to "get_breakfast" that send the "days" argument are meant to restrict the amount of time the user
+    # can do something with respect to the amount of days they were on their trip.
     car_rental = get_car_rental(days)
     miles = get_miles()
     parking_fees = get_parking_fees(days)
     taxi_fees = get_taxi_fees(days)
     registration_fees = get_registration_fee()
     hotel_fees = get_hotel_fees(days)
+    # These functions use "days" and "departure" to get the total meals overall and validate whether they can receive
+    # deductibles on their meals respectively.
     breakfast = get_breakfast(days, departure)
     lunch = get_lunch(days, departure)
     dinner = get_dinner(days, departure)
-    # After all the functions are finished, main() prints summary using the returned value from each function.
+
+    # prints summary using the returned value(s) from each function.
     print("Here is a summary:")
 
     print("You were away for", days, "Days.")
@@ -27,7 +32,7 @@ def main():
 
     print("You accrued", "$"+str(miles[0]), "worth of driving fees during your trip at 27 cents a mile. Overall, you"
           " traveled", miles[1], "miles.")
-
+    # If else statements are meant to determine whether the user saved or owes money.
     if parking_fees[0] > 0:
         print("Your total was", "$"+str(parking_fees[0]), "for parking,", "$"+str(parking_fees[1]), "was the total"
               " excess you accumulated from the company at $6 a day.")
@@ -86,7 +91,7 @@ def main():
     else:
         print("Overall, not including deductibles, you saved", "$"+str((abs(no_deductible_total))))
 
-# Function gets input and returns it to main() if it is >= 1
+# Gets the amount of days the user was away > 0 and returns the total to main()
 def get_days():
     days = int(input("Enter the amount of days the trip lasted:" + "\n"))
     # Input validation
@@ -95,7 +100,8 @@ def get_days():
 
     return days
 
-# Function gets time in (HH.MM) format for 2 variables, restricts them between 0-24, then returns them to main()
+# Function gets time in (HH.MM) format for departure and arrival home with restrictions of 0 > x > 23.59 and returns to
+# main()
 def get_time():
     departure = float(input("Enter the time you departed from home in the 24-hour format (HH.MM)." + "\n"))
     # Input validation with relation to departure
@@ -109,7 +115,7 @@ def get_time():
 
     return departure, arrival
 
-# Function gets input then returns it to main() if > 0
+# Gets cost of airfare and returns it to main()
 def get_airfare():
     airfare = float(input("Enter your round-trip airfare." + "\n"))
     # Input validation
@@ -118,9 +124,8 @@ def get_airfare():
 
     return airfare
 
-# Function gets input and restricts the input to n or y. If n is input, 0 is returned to main() and if y is input, the
-# user is then prompted to answer details about the price/fees. Then the function calculates the total and returns it to
-# main() assuming it is >= 0
+# Asks if user rented a vehicle, input validates, then either returns $0 or asks for daily fee and total days rented
+# then returns total to main().
 def get_car_rental(max_days):
     total = 0
 
@@ -146,9 +151,8 @@ def get_car_rental(max_days):
         total = 0
     return total
 
-# Function gets input and restricts the input to n or y. If n is input, 0 is returned to main() and if y is input, the
-# user is then prompted to answer certain questions. Then the function calculates the total and returns it to main()
-# assuming it is >= 0 along with company excess
+# Asks if user used a private vehicle, input validates, then either returns $0 or asks for total miles driven
+# then returns total to main().
 def get_miles():
     total_cost = 0.27
     miles_driven = 0
@@ -169,9 +173,8 @@ def get_miles():
         total_cost *= 0
     return total_cost, miles_driven
 
-# Function gets input and restricts the input to n or y. If n is input, 0 is returned to main() and if y is input, the
-# user is then prompted to answer certain questions. Then the function calculates the total and returns it to main()
-# assuming it is >= 0 along with company excess
+# Asks if user accrued any parking fees, input validates, then either returns $0 or asks for how many days they parked
+# and calculates the total with respect to excess and returns both of them to main()
 def get_parking_fees(max_days):
     total_parking = 0
     total_excess = 6
@@ -199,9 +202,8 @@ def get_parking_fees(max_days):
         total_parking = 0
     return total_parking, total_excess
 
-# Function gets input and restricts the input to n or y. If n is input, 0 is returned to main() and if y is input, the
-# user is then prompted to answer certain questions. Then the function calculates the total and returns it to main()
-# assuming it is >= 0 along with company excess
+# Asks if user used a taxi, input validates, then either returns $0 or asks for how many days they used the taxi and how
+# much it was overall and calculates a total with respect to excess and returns both of them to main()
 def get_taxi_fees(max_days):
     total_cost = 0
     total_excess = 10
@@ -229,7 +231,7 @@ def get_taxi_fees(max_days):
         total_cost = 0
     return total_cost, total_excess
 
-# Function gets input and returns it if its an integer
+# Gets registration/seminar fees and returns it to main()
 def get_registration_fee():
     fees = float(input("Enter and conference/seminar fees if any." + "\n"))
     # Input validation
@@ -238,7 +240,7 @@ def get_registration_fee():
 
     return fees
 
-# Function gets input on user hotel the calculates the total and returns along with company excess
+# Gets hotel feels, input validates, and calculates a total with respect to excess and returns both of them to main()
 def get_hotel_fees(max_days):
     total_cost = 0
     total_excess = 90
@@ -256,8 +258,8 @@ def get_hotel_fees(max_days):
     total_cost += fees - total_excess
     return total_cost, total_excess
 
-# Gets user input depending on what time the departed to their destination/arrived home. Gets the cost of each meal
-# then returns the total with company excess.
+# Gets the amount of meals with respect to arrival/departure and calculates the total with respect to excess and returns
+# both to main()
 def get_breakfast(days, departure):
     breakfast_total = 0
     breakfast_excess = 9
@@ -309,8 +311,8 @@ def get_breakfast(days, departure):
             return breakfast_total, breakfast_excess
 
 
-# Gets user input depending on what time the departed to their destination/arrived home. Gets the cost of each meal
-# then returns the total with company excess.
+# Gets the amount of meals with respect to arrival/departure and calculates the total with respect to excess and returns
+# both to main()
 def get_lunch(days, departure):
     lunch_total = 0
     lunch_excess = 12
@@ -362,8 +364,8 @@ def get_lunch(days, departure):
             return lunch_total, lunch_excess
 
 
-# Gets user input depending on what time the departed to their destination/arrived home. Gets the cost of each meal
-# then returns the total with company excess.
+# Gets the amount of meals with respect to arrival/departure and calculates the total with respect to excess and returns
+# both to main()
 def get_dinner(days, departure):
     dinner_total = 0
     dinner_excess = 16
