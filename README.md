@@ -1,1 +1,2 @@
-# big-projects
+# cecs100
+Simple business expenses calculator
