@@ -15,6 +15,7 @@ def main():
     hotel_fees = get_hotel_fees(days)
     # These functions use "days" and "departure" to get the total meals overall and validate whether they can receive
     # deductibles on their meals respectively.
+    # change
     breakfast = get_breakfast(days, departure)
     lunch = get_lunch(days, departure)
     dinner = get_dinner(days, departure)
